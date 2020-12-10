@@ -10,6 +10,8 @@ module.exports = {
   },
   devServer: {
     index: "./client/index.html",
+    open: true,
+    hot: true,
     contentBase: path.join(__dirname, 'dist-react'),
     compress: true,
     port: process.env.DEV_CLIENT_PORT ? parseInt(process.env.DEV_CLIENT_PORT) : 8000,
