@@ -1,9 +1,9 @@
 const path = require("path");
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
-const dotenvP = require('dotenv').config({path: __dirname + '/.env'});
+const dotenvP = require('dotenv').config({ path: __dirname + '/.env' });
 const webpack = require('webpack');
- 
+
 module.exports = {
   entry: {
     main: "./client/index.tsx"
@@ -21,8 +21,13 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".tsx", ".jsx", ".js", ".json"],
     plugins: [
-        new TsconfigPathsPlugin({configFile: 'react.tsconfig.json'})
-    ]
+      new TsconfigPathsPlugin({ configFile: 'react.tsconfig.json' })
+    ],
+    alias: {
+      crypto: "crypto-browserify",
+      util: "util",
+      stream: "stream-browserify"
+    }
   },
   output: {
     path: path.join(__dirname, "dist-react"),
@@ -80,11 +85,12 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-        "process.env": dotenvP
+      "process.env": JSON.stringify(dotenvP.parsed)
     }),
     new Dotenv(),
     new webpack.ProvidePlugin({
-        "React": "react",
-     }),
+      "React": "react",
+      process: "process/browser"
+    }),
   ]
 };

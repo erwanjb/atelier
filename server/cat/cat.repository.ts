@@ -1,10 +1,9 @@
 import {
     Repository,
-    EntityRepository,
-    //InsertResult,
-    //UpdateResult,
+    EntityRepository
 } from "typeorm";
 import { Cat } from "./cat.entity";
+import { Like } from "./like.entity";
 import { CreateCatDto } from './dto/create.cat.dto';
 
 @EntityRepository(Cat)
@@ -26,6 +25,7 @@ export class CatRepository extends Repository<Cat> {
 
     async findCatById (id: string) {
         const query = this.createQueryBuilder('cat')
+        .leftJoinAndSelect('cat.likes', 'likes')
         .where("cat.id = :id", { id })
         const cat = await query.getOne();
         return cat;
@@ -33,6 +33,7 @@ export class CatRepository extends Repository<Cat> {
 
     async findCats () {
         const query = this.createQueryBuilder('cat')
+        .leftJoinAndSelect('cat.likes', 'likes')
         const cats = await query.getMany();
         return cats;
     }
@@ -45,5 +46,19 @@ export class CatRepository extends Repository<Cat> {
             cat2 = cats[Math.floor(Math.random() * cats.length)];
         } while (cat1.id === cat2.id);
         return [cat1, cat2 as Cat];
+    }
+
+    async vote(catId, userId) {
+        try {
+            await this.createQueryBuilder()
+                .insert()
+                .into(Like)
+                .values({catId, userId})
+                .execute();
+            return ({status: 'OK'});
+        } catch (err) {
+            console.log(err.message);
+            return ({status: 'NO'});
+        }
     }
 }

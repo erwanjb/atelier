@@ -2,9 +2,10 @@ import {
     BaseEntity,
     Entity,
     Column,
-    // PrimaryGeneratedColumn,
     PrimaryColumn,
+    OneToMany
 } from "typeorm";
+import { Like } from './like.entity';
 
 @Entity({name: 'cat'})
 export class Cat extends BaseEntity {
@@ -12,8 +13,8 @@ export class Cat extends BaseEntity {
     id: string;
 
     @Column({ unique: true })
-    url: string
+    url: string;
 
-    @Column({ type: 'int', nullable: true })
-    likes?: number
+    @OneToMany(() => Like, like => like.cat)
+    likes: Like[]
 }

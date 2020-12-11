@@ -28,4 +28,8 @@ export class CatService {
     async getTwoCatsRandom() {
         return this.catRepository.findTwoCatsRandom();
     }
+
+    async vote(catId, userId) {
+        return this.catRepository.vote(catId, userId);
+    }
 }

@@ -1,7 +1,8 @@
 import react, { useEffect, useState } from 'react';
 import useApi from '../hooks/useApi';
-import { Paper, Avatar, makeStyles, useMediaQuery, Button } from '@material-ui/core';
+import { Paper, Avatar, makeStyles, useMediaQuery, Button, Popover, Typography } from '@material-ui/core';
 import NavBar from './NavBar';
+import { useUserConnected } from '../hooks/useToken';
 
 interface Cat {
     id: string;
@@ -10,7 +11,8 @@ interface Cat {
 
 const Vote = () => {
 
-    const matches = useMediaQuery('(max-width:700px)');
+    const matches = useMediaQuery('(max-width:900px)');
+    const matches1300 = useMediaQuery('(min-width:1300px)');
 
     const useStyles = makeStyles({
         body: {
@@ -35,7 +37,7 @@ const Vote = () => {
         },
         paper: {
             width: 'calc(50% - 50px)',
-            height: 'calc(50vw - 320px)',
+            height: matches1300 ? 350 : 'calc(50vw - 420px)',
             minHeight: 120,
             paddingTop: 50,
             paddingBottom: 50,
@@ -51,9 +53,14 @@ const Vote = () => {
         avatar: {
             width: '80%',
             height: 'auto',
-            maxHeight: matches ? 100 : 'calc(50vw - 230px)',
+            maxHeight: matches ? 100 : matches1300 ? 350 : 'calc(50vw - 330px)',
+        },
+        typography: {
+            padding: 30
         }
     });
+
+    const user = useUserConnected();
 
     const classes = useStyles();
 
@@ -77,6 +84,38 @@ const Vote = () => {
         setReload(!reload);
     }
 
+    const handleVote = async (idCat, event) => {
+        if (!user) {
+            setAnchorElNoConnect(event.target);
+        } else {
+            const response = await api.post('/cats/vote', { catId: idCat });
+            if (response.data.status === 'OK') {
+                setReload(!reload);
+            } else {
+                setAnchorElAlready(event.target);
+            }
+        }
+    }
+
+    const [anchorElNoConnect, setAnchorElNoConnect] = useState(null);
+
+    const handleCloseNoConnect = () => {
+        setAnchorElNoConnect(null);
+    };
+
+    const openNoConnect = Boolean(anchorElNoConnect);
+    const idNoConnect = openNoConnect ? 'simple-popover' : undefined;
+
+    const [anchorElAlready, setAnchorElAlready] = useState(null);
+
+    const handleCloseAlready = () => {
+        setAnchorElAlready(null);
+    };
+
+    const openAlready = Boolean(anchorElAlready);
+    console.log(anchorElAlready)
+    const idAlready = openAlready ? 'simple-auther-popover' : undefined;
+
     return (
         <div>
             <NavBar />
@@ -85,14 +124,46 @@ const Vote = () => {
                     <Button onClick={handleGenerate} variant="outlined" color="secondary" className={classes.btn}>Autres Chats</Button>
                 </div>
                 <div className={classes.contentPaper}>
-                    <Paper className={classes.paper} elevation={6}>
-                        <Avatar className={classes.avatar} src={cat1.url} alt={cat1.id}/>
+                    <Paper onClick={handleVote.bind(null, cat1.id)} className={classes.paper} elevation={6}>
+                        <Avatar className={classes.avatar} src={cat1.url} alt={cat1.id} />
                     </Paper>
-                    <Paper className={classes.paper} elevation={6}>
-                        <Avatar className={classes.avatar} src={cat2.url} alt={cat2.id}/>
+                    <Paper onClick={handleVote.bind(null, cat2.id)} className={classes.paper} elevation={6}>
+                        <Avatar className={classes.avatar} src={cat2.url} alt={cat2.id} />
                     </Paper>
                 </div>
             </div>
+            <Popover
+                id={idNoConnect}
+                open={openNoConnect}
+                anchorEl={anchorElNoConnect}
+                onClose={handleCloseNoConnect}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                }}
+            >
+                <Typography className={classes.typography}>Vous devez vous connecter pour liker. Le bouton se connecter est dans la nav barre</Typography>
+            </Popover>
+            <Popover
+                id={idAlready}
+                open={openAlready}
+                anchorEl={anchorElAlready}
+                onClose={handleCloseAlready}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                }}
+            >
+                <Typography className={classes.typography}>Vous avez déjà liké ce chat, choisissez un autre</Typography>
+            </Popover>
         </div>
     )
 }

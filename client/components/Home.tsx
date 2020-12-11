@@ -57,7 +57,7 @@ const Home = () => {
                             <Avatar className={classes.avatar} alt={cat.id} src={cat.url} />
                             <span>
                                 <FontAwesomeIcon className={classes.iconHeart} color="#DB261E" icon={faHeart} />
-                                {cat.likes ? cat.likes : 0} likes
+                                {cat.likes.length} likes
                             </span>
                         </Paper>
                     )

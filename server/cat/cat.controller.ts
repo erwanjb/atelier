@@ -1,5 +1,6 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Req, UseGuards } from '@nestjs/common';
 import { CatService } from './cat.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('/cats')
 export class CatController {
@@ -18,6 +19,12 @@ export class CatController {
     @Get('/getTwoCatsRandom')
     getTwoCatsRandom() {
         return this.catService.getTwoCatsRandom()
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Post('/vote')
+    vote(@Body() body, @Req() req) {
+        return this.catService.vote(body.catId, req.user.id)
     }
 
 }
