@@ -24,4 +24,8 @@ export class CatService {
     async getCatById(id: string) {
         return this.catRepository.findCatById(id);
     }
+
+    async getTwoCatsRandom() {
+        return this.catRepository.findTwoCatsRandom();
+    }
 }

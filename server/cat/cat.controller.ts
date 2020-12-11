@@ -10,8 +10,14 @@ export class CatController {
         return this.catService.getCats();
     }
 
-    @Get('/:id')
+    @Get('/one/:id')
     getCatById(@Param("id") id: string) {
         return this.catService.getCatById(id);
     }
+
+    @Get('/getTwoCatsRandom')
+    getTwoCatsRandom() {
+        return this.catService.getTwoCatsRandom()
+    }
+
 }

@@ -36,4 +36,14 @@ export class CatRepository extends Repository<Cat> {
         const cats = await query.getMany();
         return cats;
     }
+
+    async findTwoCatsRandom() {
+        const cats = await this.findCats();
+        const cat1 = cats[Math.floor(Math.random() * cats.length)];
+        let cat2;
+        do {
+            cat2 = cats[Math.floor(Math.random() * cats.length)];
+        } while (cat1.id === cat2.id);
+        return [cat1, cat2 as Cat];
+    }
 }
