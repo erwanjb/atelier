@@ -4,12 +4,8 @@
   "description": "",
   "main": "dist-server/server.js",
   "scripts": {
-    "start-server-win": "npm run reset-server-win && webpack --env NODE_ENV=development --config nest.webpack.config.js",
-    "start-server-lin": "npm run reset-server-lin && webpack --env NODE_ENV=development --config nest.webpack.config.js",
-    "prod-server-win": "npm run reset-server-win && webpack --env NODE_ENV=production --config nest.webpack.config.js",
-    "prod-server-lin": "npm run reset-server-lin && webpack --env NODE_ENV=production --config nest.webpack.config.js",
-    "reset-server-win": "if exist rmdir /s dist-server",
-    "reset-server-lin": "if [ -d dist-server ]; then rm -Rf dist-server; fi",
+    "start-server": "webpack --env NODE_ENV=development --config nest.webpack.config.js",
+    "prod-server": "webpack --env NODE_ENV=production --config nest.webpack.config.js",
     "start-react": "webpack serve --config react.webpack.config.js",
     "prod-react": "webpack --config react.webpack.config.js"
   },
