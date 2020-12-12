@@ -31,6 +31,7 @@ module.exports = env => {
                 },
             ],
         },
+        mode: 'development',
         node: {
             __dirname: false,
         },
