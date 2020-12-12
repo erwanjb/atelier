@@ -29,7 +29,7 @@ Les variables d'environnement sont à mettre dans un `.env`
 ## les Commandes
 
 - pour build les dépendances `npm install`
-- pour lancer le back en mode dévelopement sur windows: `npm run start-server`.
+- pour lancer le back en mode dévelopement : `npm run start-server`.
 - pour lancer le front en mode dévelopement: `npm run start-react`.
 - pour build en production le front : `npm run prod-react`.
-- pour build en production le back sur windows: `npm run prod-server`.
+- pour build en production le back : `npm run prod-server`.
