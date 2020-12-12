@@ -113,7 +113,6 @@ const Vote = () => {
     };
 
     const openAlready = Boolean(anchorElAlready);
-    console.log(anchorElAlready)
     const idAlready = openAlready ? 'simple-auther-popover' : undefined;
 
     return (
