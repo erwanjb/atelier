@@ -1,8 +1,19 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import cors from 'cors';
-import express from 'express';
+import express, { RequestHandler, Request, Response, NextFunction } from 'express';
 import { CatService } from './cat/cat.service';
+import history from 'connect-history-api-fallback';
+
+const unless = (path: string, middleware: RequestHandler) => {
+    return (req: Request, res: Response, next: NextFunction) => {
+        if (path === req.path) {
+            return next();
+        } else {
+            return middleware(req, res, next);
+        }
+    };
+};
 
 declare const module: any;
 
@@ -19,13 +30,14 @@ async function bootstrap() {
         }))
     } else if (process.env.NODE_ENV === 'production') {
         app.use('/', express.static('dist-react'));
+        app.use(unless('/auth/confirmToken/me/token', history()));
     }
 
     await app.listen(process.env.PORT ? parseInt(process.env.PORT) : 3000);
     if (module.hot) {
         module.hot.accept();
         module.hot.dispose(() => app.close());
-      }
+    }
 }
 
 bootstrap();

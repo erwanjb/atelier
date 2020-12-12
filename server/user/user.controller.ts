@@ -1,5 +1,6 @@
 import { Body, Controller, Post, } from '@nestjs/common';
 import { UserService } from './user.service';
+import { User } from './user.entity';
 
 interface UserToCreate {
     email: string;
@@ -13,7 +14,7 @@ export class UserController {
     
     @Post()
     async create(@Body() body: UserToCreate) {
-        const response = await this.userService.create(body);
+        const response = await this.userService.create(body as User);
         return response;
     }
 }

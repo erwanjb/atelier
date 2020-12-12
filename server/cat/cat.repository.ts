@@ -48,7 +48,7 @@ export class CatRepository extends Repository<Cat> {
         return [cat1, cat2 as Cat];
     }
 
-    async vote(catId, userId) {
+    async vote(catId: string, userId: string) {
         try {
             await this.createQueryBuilder()
                 .insert()

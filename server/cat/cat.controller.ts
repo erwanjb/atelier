@@ -1,6 +1,17 @@
 import { Controller, Get, Param, Post, Body, Req, UseGuards } from '@nestjs/common';
 import { CatService } from './cat.service';
 import { AuthGuard } from '@nestjs/passport';
+import { Request } from 'express';
+
+interface BodyLike {
+    catId: string;
+}
+
+import { User } from '../user/user.entity';
+
+interface ReqUser extends Request {
+    user: User;
+}
 
 @Controller('/cats')
 export class CatController {
@@ -23,7 +34,7 @@ export class CatController {
 
     @UseGuards(AuthGuard('jwt'))
     @Post('/vote')
-    vote(@Body() body, @Req() req) {
+    vote(@Body() body: BodyLike, @Req() req: ReqUser) {
         return this.catService.vote(body.catId, req.user.id)
     }
 

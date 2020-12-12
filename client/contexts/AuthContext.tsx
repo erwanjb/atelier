@@ -16,18 +16,13 @@ export const AuthProvider: FC = ({ children }) => {
     const api = useApi();
 
     const login = async (email: string, password: string): Promise<void> => {
-        try {
-            const response = await api.post('/auth/login', {
-                username: email,
-                password
-            });
-    
-            const tokenNow = response.data.token;
-            dispatch(setToken(tokenNow));
-        } catch (err) {
-           console.log(err);
-        }
+        const response = await api.post('/auth/login', {
+            username: email,
+            password
+        });
 
+        const tokenNow = response.data.token;
+        dispatch(setToken(tokenNow));   
     }
 
     const logout = () => {

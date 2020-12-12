@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import useAuth from "../hooks/useAuth";
-import { Paper, TextField, Button, makeStyles, Typography} from '@material-ui/core';
+import { Paper, TextField, Button, makeStyles, Typography, Popover } from '@material-ui/core';
 import { useForm } from "react-hook-form";
 import { useHistory } from 'react-router-dom';
 import NavBar from './NavBar';
@@ -24,6 +24,9 @@ const Connexion: FC = () => {
             "& div": {
                 width: "100%"
             }
+        },
+        popover: {
+            padding: 20
         }
     });
 
@@ -34,8 +37,15 @@ const Connexion: FC = () => {
     const classes = useStyles();
     const auth = useAuth();
 
-    const onSubmit = ({email, password}) => {
-        auth.login(email, password);
+    const onSubmit = async ({email, password}) => {
+        try {
+            await auth.login(email, password);
+            setOpen(true);
+            setPopoverStatus(200);
+        } catch (err) {
+            setOpen(true);
+            setPopoverStatus(404);
+        }
     }
 
     const onReset = () => {
@@ -49,6 +59,15 @@ const Connexion: FC = () => {
     const handleHome = () => {
         history.push('/');
     }
+
+    const [open, setOpen] = useState(false);
+    const [popoverStatus, setPopoverStatus] = useState(0);
+    
+    const handleClose = () => {
+        setOpen(false);
+    };
+    
+    const id = open ? 'simple-popover' : undefined;
 
     return (
         <div>
@@ -93,6 +112,19 @@ const Connexion: FC = () => {
                     </form>
                 </Paper>
             </div>
+            <Popover
+                id={id}
+                open={open}
+                onClose={handleClose}
+            >
+                {
+                    popoverStatus === 200 ? 
+                    <Typography className={classes.popover}>Vous êtes connecté</Typography> : 
+                    (popoverStatus === 404 ?
+                    <Typography className={classes.popover}>Aucun compte actif trouvé a cet email</Typography> :
+                    null)    
+                }   
+            </Popover>
         </div>
     );
 };

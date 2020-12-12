@@ -17,7 +17,7 @@ export class AuthService {
 
     async validateUser(username: string, pass: string): Promise<any> {
         const user = await this.usersService.findByEmail(username);
-        if (user && user.password === shA256(pass, process.env.AUTH_SECRET).toString()) {
+        if (user && user.password === shA256(pass, process.env.AUTH_SECRET as any).toString()) {
             const { password, status, ...result } = user;
             if (status === StatusEnum.ENABLED) {
                 return result;
@@ -69,7 +69,7 @@ export class AuthService {
     async resetPassword (userId: string, token: string, password: string) {
         const user = await this.usersService.findByIdResetPassword(userId, token);
         
-        user.password = shA256(password, process.env.AUTH_SECRET).toString();
+        user.password = shA256(password, process.env.AUTH_SECRET as any).toString();
         user.confirmToken = null;
         user.save();
         

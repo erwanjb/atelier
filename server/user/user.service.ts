@@ -14,7 +14,7 @@ export class UserService {
         private userRepository: UserRepository
     ) {}
 
-    async create(user) {
+    async create(user: User) {
         const userLoaded = {...user};
         userLoaded.status = StatusEnum.TO_CONFIRM;
         const { email } = userLoaded;
@@ -34,7 +34,7 @@ export class UserService {
             verifyToken = await this.verifyToken(confirmToken);
         } while (verifyToken);
         userLoaded.confirmToken = confirmToken;
-        userLoaded.password = shA256(userLoaded.password, process.env.AUTH_SECRET).toString();
+        userLoaded.password = shA256(userLoaded.password, process.env.AUTH_SECRET as any).toString();
 
         const newUser = await this.userRepository.createUser(userLoaded);
 

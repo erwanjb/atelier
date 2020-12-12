@@ -6,6 +6,10 @@ J'ai décidé de faire le front de l'application web en React et le back en Nest
 
 Les sources du front sont dans `client` et les sources du back dans `server`.
 
+Pour pouvoir voter il faut avoir un compte et se connecter, la validation de création de compte se fait par mail.
+
+J'ai décidé d'utiliser Mailgun pour envoyer des mails.
+
 Les variables d'environnement sont à mettre dans un `.env`
 - NODE_ENV => `development` ou `production`
 - PORT => port du server node (back) (optionel defaut 3000)
@@ -17,6 +21,10 @@ Les variables d'environnement sont à mettre dans un `.env`
 - DEV_CLIENT_PORT => port du client en mode dévelopement (optionel defaut 8000)
 - CLIENT_URL => exemple http://localhost/ DEV_CLIENT_PORT (optionel si en mode production)
 - API_URL => exemple http://localhost/ PORT
+- MAILGUN_API_KEY => Key Mailgun
+- MAILGUN_DOMAINE => Domaine Mailgun
+- JWT_SECRET => une chaîne de caractère
+- AUTH_SECRET => une chaîne de caractère
 
 ## les Commandes
 

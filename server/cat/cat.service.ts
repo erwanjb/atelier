@@ -29,7 +29,7 @@ export class CatService {
         return this.catRepository.findTwoCatsRandom();
     }
 
-    async vote(catId, userId) {
+    async vote(catId: string, userId: string) {
         return this.catRepository.vote(catId, userId);
     }
 }
