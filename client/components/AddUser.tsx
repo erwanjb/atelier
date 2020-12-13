@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import useApi from "../hooks/useApi";
 import { useHistory } from 'react-router-dom';
 import NavBar from './NavBar';
+import * as EmailValidator from 'email-validator';
 
 const AddUser: FC = () => {
 
@@ -61,8 +62,12 @@ const AddUser: FC = () => {
                 type: "password",
                 message: "Egaliser les mots de passe"
             });
+        } else if (EmailValidator.validate(user.email)) {
+            setError('email', {
+                type: "email",
+                message: "Email pas valide"
+            });
         } else {
-
             try {
                 await api.post('users', user);
                 setOpen(true);
@@ -103,7 +108,7 @@ const AddUser: FC = () => {
                             label={<Typography>Email</Typography>}
                             inputRef={register({ required: true, pattern:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/ })}
                             error={errors.email}
-                            helperText={errors.email ? <Typography>Le mail est obligatoire en format mail -@-.-</Typography> : null}
+                            helperText={errors.email ? <Typography>Le mail est obligatoire et doit être valide</Typography> : null}
                         />
                         <TextField
                             className={classes.field}
