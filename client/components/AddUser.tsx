@@ -62,7 +62,7 @@ const AddUser: FC = () => {
                 type: "password",
                 message: "Egaliser les mots de passe"
             });
-        } else if (EmailValidator.validate(user.email)) {
+        } else if (!EmailValidator.validate(user.email)) {
             setError('email', {
                 type: "email",
                 message: "Email pas valide"
