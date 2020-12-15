@@ -23,6 +23,7 @@ Les variables d'environnement sont à mettre dans un `.env`
 - API_URL => exemple http://localhost/ PORT
 - MAILGUN_API_KEY => Key Mailgun
 - MAILGUN_DOMAINE => Domaine Mailgun
+- MAILGUN_HOST => exemple eu : api.eu.mailgun.net
 - JWT_SECRET => une chaîne de caractère
 - AUTH_SECRET => une chaîne de caractère
 
