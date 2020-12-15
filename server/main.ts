@@ -29,8 +29,8 @@ async function bootstrap() {
             origin: process.env.CLIENT_URL
         }))
     } else if (process.env.NODE_ENV === 'production') {
-        app.use('/', express.static('dist-react'));
         app.use(unless('/auth/confirmToken/me/token', history()));
+        app.use('/', express.static('dist-react'));
     }
 
     await app.listen(process.env.PORT ? parseInt(process.env.PORT) : 3000);
