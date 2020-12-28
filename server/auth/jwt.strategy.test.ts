@@ -18,7 +18,7 @@ describe('The JwtStrategy', () => {
 
     beforeEach(async () => {
         const secret = 'secretKey';
-        const jwt = new JwtStrategy(jest.fn(), secret);
+        const jwt = new JwtStrategy();
         class MockJwtStrategy {
             validate = jwt.validate
         }
