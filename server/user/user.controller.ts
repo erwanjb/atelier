@@ -2,7 +2,7 @@ import { Body, Controller, Post, } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './user.entity';
 
-interface UserToCreate {
+export interface UserToCreate {
     email: string;
     name: string;
     password: string;

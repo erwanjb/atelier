@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
-import shA256  from "crypto-js/sha256";
 import { JwtService } from '@nestjs/jwt';
 import { StatusEnum } from "../user/enum/statusEnum";
 import { Response } from "express";
@@ -17,7 +16,7 @@ export class AuthService {
 
     async validateUser(username: string, pass: string): Promise<any> {
         const user = await this.usersService.findByEmail(username);
-        if (user && user.password === shA256(pass, process.env.AUTH_SECRET as any).toString()) {
+        if (user && user.password === crypto.SHA256(pass, process.env.AUTH_SECRET as any).toString()) {
             const { password, status, ...result } = user;
             if (status === StatusEnum.ENABLED) {
                 return result;
@@ -55,7 +54,6 @@ export class AuthService {
 
         user.confirmToken = confirmToken;
         user.save()
-        
         await transport.sendMail({
             from: 'ne-pas-repondre@catmash.fr',
             to: email,
@@ -69,7 +67,7 @@ export class AuthService {
     async resetPassword (userId: string, token: string, password: string) {
         const user = await this.usersService.findByIdResetPassword(userId, token);
         
-        user.password = shA256(password, process.env.AUTH_SECRET as any).toString();
+        user.password = crypto.SHA256(password, process.env.AUTH_SECRET as any).toString();
         user.confirmToken = null;
         user.save();
         

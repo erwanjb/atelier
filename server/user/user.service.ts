@@ -4,7 +4,6 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { User } from './user.entity';
 import { StatusEnum } from './enum/statusEnum';
 import transport from '../configs/nodemailer.config';
-import shA256  from "crypto-js/sha256";
 import crypto from "crypto-js";
 
 @Injectable()
@@ -34,14 +33,14 @@ export class UserService {
             verifyToken = await this.verifyToken(confirmToken);
         } while (verifyToken);
         userLoaded.confirmToken = confirmToken;
-        userLoaded.password = shA256(userLoaded.password, process.env.AUTH_SECRET as any).toString();
+        userLoaded.password = crypto.SHA256(userLoaded.password, process.env.AUTH_SECRET as any).toString();
 
         const newUser = await this.userRepository.createUser(userLoaded);
 
         if (!found) {
             await this.createConfirmMail(newUser.id, userLoaded.email, confirmToken);
         }
-        return 'User créé, mail envoyé'
+        return 'User créé, mail envoyé';
     }
 
     async findByEmail(email: string): Promise<User> {

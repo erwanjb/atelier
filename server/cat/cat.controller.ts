@@ -2,14 +2,13 @@ import { Controller, Get, Param, Post, Body, Req, UseGuards } from '@nestjs/comm
 import { CatService } from './cat.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
+import { User } from '../user/user.entity';
 
-interface BodyLike {
+export interface BodyLike {
     catId: string;
 }
 
-import { User } from '../user/user.entity';
-
-interface ReqUser extends Request {
+export interface ReqUser extends Request {
     user: User;
 }
 

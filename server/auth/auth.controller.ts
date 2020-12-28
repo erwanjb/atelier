@@ -4,15 +4,15 @@ import { AuthService } from './auth.service';
 import { Request as ReqExpress, Response as ResExpress } from 'express';
 import { User } from '../user/user.entity';
 
-interface ReqUser extends ReqExpress{
+export interface ReqUser extends ReqExpress{
     user: User;
 }
 
-interface BodyEmail {
+export interface BodyEmail {
     email: string;
 }
 
-interface BodyReset {
+export interface BodyReset {
     userId: string;
     token: string;
     password: string;

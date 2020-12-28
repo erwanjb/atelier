@@ -34,3 +34,7 @@ Les variables d'environnement sont à mettre dans un `.env`
 - pour lancer le front en mode dévelopement: `npm run start-react`.
 - pour build en production le front : `npm run prod-react`.
 - pour build en production le back : `npm run prod-server`.
+
+## le tests
+
+- pour lancer les tests unitaires du back : `npm run test-server`
