@@ -37,4 +37,5 @@ Les variables d'environnement sont à mettre dans un `.env`
 
 ## le tests
 
-- pour lancer les tests unitaires du back : `npm run test-server`
+- pour lancer les tests unitaires du back : `npm run test-server`.
+- pour lancer les tests react : `npm run test-react`

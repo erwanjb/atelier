@@ -66,9 +66,10 @@ const SendResetPassword: FC = () => {
                 <Paper
                     className={classes.content}
                 >
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form onSubmit={handleSubmit(onSubmit)} role="form">
                         <TextField
                             className={classes.field}
+                            inputProps={{role: 'input', 'aria-label': 'email' }}
                             name="email"
                             label={<Typography>Email</Typography>}
                             inputRef={register({ required: true, pattern:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/ })}

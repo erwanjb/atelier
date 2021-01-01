@@ -1,4 +1,4 @@
-import react, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles, Paper, Avatar } from '@material-ui/core';
 import useApi from '../hooks/useApi';
 import NavBar from './NavBar';
@@ -51,9 +51,9 @@ const Home = () => {
         <div>
             <NavBar />
             <div className={classes.contentCat}>
-                {cats.map(cat => {
+                {cats.map((cat, index) => {
                     return (
-                        <Paper className={classes.paper} elevation={6}>
+                        <Paper className={classes.paper} elevation={6} role="cat" key={index}>
                             <Avatar className={classes.avatar} alt={cat.id} src={cat.url} />
                             <span>
                                 <FontAwesomeIcon className={classes.iconHeart} color="#DB261E" icon={faHeart} />

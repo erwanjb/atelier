@@ -1,4 +1,4 @@
-import react, { useState } from 'react';
+import React, { useState } from 'react';
 import { AppBar, makeStyles, IconButton, Typography, Menu, MenuItem } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { Menu as MenuIcon } from '@material-ui/icons';
@@ -60,8 +60,8 @@ const NavBar = () => {
     return (
         <AppBar className={classes.bar} position="sticky">
             <Typography>Cat Mash</Typography>
-            <IconButton className={classes.btn} onClick={handleDirect.bind(null, '')}>Accueil</IconButton>
-            <IconButton className={classes.btn} onClick={handleDirect.bind(null, 'vote')}>Voter</IconButton>
+            <IconButton role="btnHome" className={classes.btn} onClick={handleDirect.bind(null, '')}>Accueil</IconButton>
+            <IconButton role="btnVote" className={classes.btn} onClick={handleDirect.bind(null, 'vote')}>Voter</IconButton>
             <div className={classes.menuButton}>
                 {user ? <Typography>{user.name}</Typography> : null}
                 <IconButton
@@ -69,6 +69,7 @@ const NavBar = () => {
                     color="inherit"
                     aria-label="open drawer"
                     onClick={handleProfileMenuOpen}
+                    role="btnMenu"
                     >
                     <MenuIcon />
                 </IconButton>
@@ -84,8 +85,8 @@ const NavBar = () => {
             >
                 {
                     user ?
-                    <MenuItem onClick={handleDeco}>Se Déconnecter</MenuItem> :
-                    <MenuItem onClick={handleConnect}>Se Connecter</MenuItem>
+                    <MenuItem role="btnDeco" onClick={handleDeco}>Se Déconnecter</MenuItem> :
+                    <MenuItem role="btnCo" onClick={handleConnect}>Se Connecter</MenuItem>
                 }
             </Menu>
         </AppBar>

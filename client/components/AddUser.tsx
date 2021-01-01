@@ -1,5 +1,5 @@
-import React, { FC, useCallback, useState } from 'react';
-import { Paper, Typography, TextField, Button, makeStyles, FormHelperText, Avatar, Popover } from "@material-ui/core";
+import React, { FC, useState } from 'react';
+import { Paper, Typography, TextField, Button, makeStyles, Popover } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import useApi from "../hooks/useApi";
 import { useHistory } from 'react-router-dom';
@@ -100,10 +100,11 @@ const AddUser: FC = () => {
                 <Paper
                     className={classes.content}
                 >
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form onSubmit={handleSubmit(onSubmit)} role="form">
                         <Typography>Créer un compte</Typography>
                         <TextField
                             className={classes.field}
+                            inputProps={{role: 'input', 'aria-label': 'email' }}
                             name="email"
                             label={<Typography>Email</Typography>}
                             inputRef={register({ required: true, pattern:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/ })}
@@ -112,6 +113,7 @@ const AddUser: FC = () => {
                         />
                         <TextField
                             className={classes.field}
+                            inputProps={{role: 'input', 'aria-label': 'password' }}
                             name="password"
                             type="password"
                             label={<Typography>Mot de passe</Typography>}
@@ -121,6 +123,7 @@ const AddUser: FC = () => {
                         />
                         <TextField
                             className={classes.field}
+                            inputProps={{role: 'input', 'aria-label': 'confirmPassword' }}
                             name="confirmPassword"
                             type="password"
                             label={<Typography>Confirmation du mot de passe</Typography>}
@@ -130,6 +133,7 @@ const AddUser: FC = () => {
                         />
                         <TextField
                             className={classes.field}
+                            inputProps={{role: 'input', 'aria-label': 'name' }}
                             name="name"
                             label={<Typography>Nom ou pseudo</Typography>}
                             inputRef={register({ required: true })}

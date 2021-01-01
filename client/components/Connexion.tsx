@@ -75,10 +75,12 @@ const Connexion: FC = () => {
             <div className={classes.body}>
                 <Paper className={classes.content}>
                     <Button onClick={handleHome}>Retour à l'accueil</Button>
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form onSubmit={handleSubmit(onSubmit)} role="form">
                         <TextField
                             className={classes.field}
+                            inputProps={{role: 'input', 'aria-label': 'email' }}
                             name="email"
+                            InputLabelProps={{"data-shrink" : "true"} as any}
                             label={<Typography>Email</Typography>}
                             inputRef={register({ required: true, pattern:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/ })}
                             error={errors.email}
@@ -86,7 +88,9 @@ const Connexion: FC = () => {
                         />
                         <TextField
                             className={classes.field}
+                            inputProps={{role: 'input', 'aria-label': 'password' }}
                             name="password"
+                            InputLabelProps={{"data-shrink" : "true"} as any}
                             type="password"
                             label={<Typography>Mot de passe</Typography>}
                             inputRef={register({ required: true })}
@@ -98,6 +102,7 @@ const Connexion: FC = () => {
                             type="submit"
                             variant="outlined"
                             color="primary"
+                            role="submit"
                         >Se connecter</Button>
                         <Button
                             className={classes.field}
@@ -116,12 +121,13 @@ const Connexion: FC = () => {
                 id={id}
                 open={open}
                 onClose={handleClose}
+                role='popover'
             >
                 {
                     popoverStatus === 200 ? 
                     <Typography className={classes.popover}>Vous êtes connecté</Typography> : 
                     (popoverStatus === 404 ?
-                    <Typography className={classes.popover}>Aucun compte actif trouvé a cet email</Typography> :
+                    <Typography className={classes.popover}>Aucun compte actif trouvé avec ces identifiants</Typography> :
                     null)    
                 }   
             </Popover>

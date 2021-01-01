@@ -1,4 +1,4 @@
-import react, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useApi from '../hooks/useApi';
 import { Paper, Avatar, makeStyles, useMediaQuery, Button, Popover, Typography } from '@material-ui/core';
 import NavBar from './NavBar';
@@ -123,10 +123,10 @@ const Vote = () => {
                     <Button onClick={handleGenerate} variant="outlined" color="secondary" className={classes.btn}>Autres Chats</Button>
                 </div>
                 <div className={classes.contentPaper}>
-                    <Paper onClick={handleVote.bind(null, cat1.id)} className={classes.paper} elevation={6}>
+                    <Paper onClick={handleVote.bind(null, cat1.id)} className={classes.paper} elevation={6} role="cat1">
                         <Avatar className={classes.avatar} src={cat1.url} alt={cat1.id} />
                     </Paper>
-                    <Paper onClick={handleVote.bind(null, cat2.id)} className={classes.paper} elevation={6}>
+                    <Paper onClick={handleVote.bind(null, cat2.id)} className={classes.paper} elevation={6} role="cat2">
                         <Avatar className={classes.avatar} src={cat2.url} alt={cat2.id} />
                     </Paper>
                 </div>
@@ -161,7 +161,7 @@ const Vote = () => {
                     horizontal: 'center',
                 }}
             >
-                <Typography className={classes.typography}>Vous avez déjà liké ce chat, choisissez un autre</Typography>
+                <Typography role='popover' className={classes.typography}>Vous avez déjà liké ce chat, choisissez un autre</Typography>
             </Popover>
         </div>
     )

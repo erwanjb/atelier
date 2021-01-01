@@ -78,9 +78,10 @@ const ResetPassword: FC = () => {
                 <Paper
                     className={classes.content}
                 >
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form onSubmit={handleSubmit(onSubmit)} role="form">
                         <TextField
                             className={classes.field}
+                            inputProps={{role: 'input', 'aria-label': 'password' }}
                             name="password"
                             type="password"
                             label={<Typography>Mot de passe</Typography>}
@@ -90,6 +91,7 @@ const ResetPassword: FC = () => {
                         />
                         <TextField
                             className={classes.field}
+                            inputProps={{role: 'input', 'aria-label': 'confirmPassword' }}
                             name="confirmPassword"
                             type="password"
                             label={<Typography>Confirmation du mot de passe</Typography>}
@@ -98,6 +100,7 @@ const ResetPassword: FC = () => {
                             helperText={errors.confirmPassword ? <Typography>La confirmation du mot de passe est obligatoire et doit correspondre au mot de passe</Typography> : null}
                         />
                         <Button
+                            role="submit"
                             className={classes.field}
                             color="primary"
                             variant="outlined"
